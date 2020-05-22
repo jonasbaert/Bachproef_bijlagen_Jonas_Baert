@@ -23,6 +23,9 @@ barplot(aantalT, main = "Algemeen verloop van gebruik toegankelijke app")
 # Vergelijking tussen aantal succesvol vs aantal onsucccesvol
 matrix <- rbind(c(5.26, 84.2), c(94.74, 15.8)) # De uitgekomen waarden hierboven
 
+# t : toegankelijk
+# nt : niet-toegankelijk
+
 #    succes onsucces
 # t   94.74   5.26
 # nt  15.8    84.2
@@ -35,19 +38,19 @@ axis(side=2,at=bp[1+c(0,20,40,60,80)],labels=c(20,40,60,80,100))
 apps <- read_excel("D:/HoGent_2019-2020/Bachelorproef/Resultaten/Appgebruik.xlsx")
 View(apps)
 
-apps$...1 <- NULL
+apps$...1 <- NULL # Verwijder de eerste kolom zodat er met correcte waarden kan worden gewerkt.
 
-appsWithTotal <- rbind(apps, colSums(apps))
+appsWithTotal <- rbind(apps, colSums(apps)) # Voeg een rij met totalen toe onderaan de tabel.
 View(appsWithTotal)
 
-# keep row with totals
-ftApps <- appsWithTotal[20,]
-topFiveApps <- head(sort(ftApps, decreasing = TRUE), n = 5)
-View(topFiveApps)
-topFiveApps <- topFiveApps[,1:5]
+ftApps <- appsWithTotal[20,] # Behou enkel de rij met totalen
 
-bpTopApps <- barplot(as.matrix(topFiveApps), main = "Top 5 meest gebruikte apps bij de testpersonen")
-axis(side = 2, at = bpTopApps[1 + c(0, 5, 10, 15, 20)], labels = c(5, 10, 15, 20, 25))
+topFiveApps <- head(sort(ftApps, decreasing = TRUE), n = 5) # Sorteer van hoog naar laag
+View(topFiveApps)
+topFiveApps <- topFiveApps[,1:5] # Neem de 5 kolommen met de hoogste waarden
+
+bpTopApps <- barplot(as.matrix(topFiveApps), main = "Top 5 meest gebruikte apps bij de testpersonen") # Creëer de grafiek
+axis(side = 2, at = bpTopApps[1 + c(0, 5, 10, 15, 20)], labels = c(5, 10, 15, 20, 25)) # Voeg correcte labels toe aan grafiek
 
 # Top 5 meestgebruikte hulpmiddelen
 hulpmiddelen <- read_excel("D:/HoGent_2019-2020/Bachelorproef/Resultaten/Toegankelijkheidsopties.xlsx")
@@ -83,7 +86,7 @@ barplot(as.matrix(topFiveProblemen), main = "Top 5 problemen bij niet-toegankeli
 verbeteringen <- read_excel("D:/HoGent_2019-2020/Bachelorproef/Resultaten/Opmerkingen_toegankelijk.xlsx")
 View(verbeteringen)
 verbeteringen$...1 <- NULL
-verbeteringen$Mooier <- NULL # Een subjectief gegeven
+verbeteringen$Mooier <- NULL # Een subjectief gegeven, dus niet relevant voor dit onderzoek
 
 verbeteringenWithTotal <- rbind(verbeteringen, colSums(verbeteringen))
 ftVerbeteringen <- verbeteringenWithTotal[20,]
